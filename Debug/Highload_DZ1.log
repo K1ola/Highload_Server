@@ -1,0 +1,18 @@
+﻿  Highload_DZ1.cpp
+  Request.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+  Response.cpp
+  Server.cpp
+C:\Users\Kate\source\repos\Highload_DZ1\Response.cpp(115,10): warning C4244:  инициализация: преобразование "uintmax_t" в "int", возможна потеря данных
+C:\Users\Kate\source\repos\Highload_DZ1\Response.cpp(115,10): warning C4244: Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+C:\Users\Kate\source\repos\Highload_DZ1\Response.cpp(115,10): warning C4244: - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+C:\Users\Kate\source\repos\Highload_DZ1\Response.cpp(115,10): warning C4244: - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+C:\Users\Kate\source\repos\Highload_DZ1\Response.cpp(115,10): warning C4244: Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+C:\Users\Kate\source\repos\Highload_DZ1\Server.cpp(35,59): warning C4305:  аргумент: усечение из "int" в "char"
+  Создание кода...
+C:\Users\Kate\source\repos\Highload_DZ1\Server.cpp(35,53): warning C4309:  аргумент: усечение константного значения
+C:\Users\Kate\source\repos\Highload_DZ1\Response.cpp(110): warning C4715:  Response::get_file_type: значение возвращается не при всех путях выполнения
+LINK : fatal error LNK1104: не удается открыть файл "libboost_date_time-vc142-mt-gd-x32-1_71.lib"

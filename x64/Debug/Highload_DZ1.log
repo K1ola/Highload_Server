@@ -1,0 +1,5 @@
+﻿  Response.cpp
+C:\Users\Kate\source\repos\Highload_DZ1\Response.cpp(157,10): warning C4244:  инициализация: преобразование "std::streamoff" в "int", возможна потеря данных
+C:\Users\Kate\source\repos\Highload_DZ1\Response.cpp(57): warning C4715:  Response::Get_Response: значение возвращается не при всех путях выполнения
+C:\Users\Kate\source\repos\Highload_DZ1\Response.cpp(76): warning C4715:  Response::Head_Response: значение возвращается не при всех путях выполнения
+  Highload_DZ1.vcxproj -> C:\Users\Kate\source\repos\ConsoleApplication1\x64\Debug\Highload_DZ1.exe
