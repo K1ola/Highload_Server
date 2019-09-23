@@ -3,15 +3,10 @@
 #include <string>
 #include <boost/asio.hpp>
 #include "Server.h"
-#include "Config.h"
 
 int main()
 {
     unsigned short port = 8887;
-    
-    Config config;
-    config.ReadConfig();
-    
     Server server(port);
     try
     {

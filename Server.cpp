@@ -3,10 +3,6 @@
 #include <ctime>
 #include <sstream>
 
-void ServerSession(boost::asio::ip::tcp::socket socket)
-{
-
-}
 
 void Server::session(boost::asio::ip::tcp::socket socket)
 {
@@ -32,7 +28,7 @@ void Server::Start(boost::asio::io_service& io_service)
             Request request;
             request.Parse(str);
 
-            Response response(request.url);
+            Response response(config.document_root_debug, request.url);
 
             std::string response_str;
 

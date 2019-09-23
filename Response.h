@@ -10,7 +10,7 @@ class Response
 {
 public:
     //Response();
-    Response(std::string);
+    Response(std::string, std::string);
     std::string Get_Response();
     std::string Head_Response();
 
@@ -48,9 +48,8 @@ private:
     std::string send_file();
 
     std::string url;
-    //TODO hardcode, take this from config?
-    std::string root = R"(/var/www/html)";
-    std::string path = R"(/var/www/html)";
+    std::string root;// = R"(/var/www/html)";
+    std::string path;// = R"(/var/www/html)";
 };
 
 

@@ -9,12 +9,12 @@ public:
     unsigned short thread_limit = 256;
     std::string document_root = "/var/www/html";
     std::string config_path = "httpd.conf";
+    std::string document_root_debug = "/home/kate/CLionProjects/Highload_Server";
     unsigned short cpu_limit = 4;
 public:
     Config() = default;
     void ReadConfig();
-private:
-    std::string current_path();
+    std::string CurrentPath();
 };
 
 

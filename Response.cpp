@@ -3,15 +3,15 @@
 #include <sstream>
 #include "Response.h"
 
-Response::Response(std::string _url): url(_url)
+Response::Response(std::string _path, std::string _url): path(_path), url(_url)
 {
 }
 
 std::string Response::Get_Response()
 {
-    std::string path = root + url;
+    std::string full_path = path + url;
     std::string root_directory;
-    if (!url_decode(path, root_directory)) {
+    if (!url_decode(full_path, root_directory)) {
         return Bad_Request();
     }
 
@@ -39,7 +39,7 @@ std::string Response::Get_Response()
 
     if (this->path.find('.') == std::string::npos)
     {
-        this->path += "index.html";
+        this->path += "/index.html";
     }
 
 
