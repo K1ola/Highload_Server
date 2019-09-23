@@ -2,7 +2,8 @@
 #include <fstream>
 #include <ctime>
 #include <sstream>
-
+#include <string>
+#include <iostream>
 
 void Server::session(boost::asio::ip::tcp::socket socket)
 {
@@ -72,3 +73,44 @@ void Server::Start(boost::asio::io_service& io_service)
     }
 }
 
+void Server::getFilesToHashMap() {
+    const boost::filesystem::path& dir_path(config.document_root_debug + "/httptest");
+    find_file(dir_path);
+}
+
+void Server::find_file(const boost::filesystem::path& p)
+{
+    try
+    {
+        if (exists(p))    // does p actually exist?
+        {
+            directory_iterator end_itr;
+
+            // cycle through the directory
+            for (directory_iterator itr(p); itr != end_itr; ++itr)
+            {
+                // If it's not a directory, list it. If you want to list directories too, just remove this check.
+                if (is_regular_file(itr->path())) {
+                    // assign current file name to current_file and echo it out to the console.
+                    std::string current_file = itr->path().string();
+                    std::ifstream file(current_file, std::ios::binary);
+                    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+
+                    map[current_file] = content;
+                    std::cout << current_file << std::endl;
+                }
+                else
+                {
+                    find_file(itr->path());
+                }
+            }
+        }
+        else
+            std::cout << p << " does not exist\n";
+    }
+
+    catch (const filesystem_error& ex)
+    {
+        std::cout << ex.what() << '\n';
+    }
+}
