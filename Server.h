@@ -28,9 +28,9 @@ using boost::asio::ip::tcp;
 class Server
 {
 public:
-    Server() { config.ReadConfig(); getFilesToHashMap(); };
+    Server() { config.ReadConfig(); };//getFilesToHashMap(); };
     Server(unsigned short _port)
-            : port(_port) { config.ReadConfig(); getFilesToHashMap(); };
+            : port(_port) { config.ReadConfig(); };//getFilesToHashMap(); };
     void Start(boost::asio::io_service& io_service);
     Config config;
 private:
