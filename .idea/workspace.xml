@@ -12,16 +12,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a814c5a2-7efe-43f7-b644-73b3bbf562e7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Config.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config.h" beforeDir="false" afterPath="$PROJECT_DIR$/Config.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Highload_DZ1" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Response.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Response.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Response.h" beforeDir="false" afterPath="$PROJECT_DIR$/Response.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Server.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Server.h" beforeDir="false" afterPath="$PROJECT_DIR$/Server.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Highload_DZ1" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Highload_DZ1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Highload_DZ1.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Highload_DZ1.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Highload_DZ1" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/httpd.conf" beforeDir="false" afterPath="$PROJECT_DIR$/httpd.conf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -40,6 +37,11 @@
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -70,7 +72,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1569253196980</updated>
-      <workItem from="1569253199693" duration="2286000" />
+      <workItem from="1569253199693" duration="3975000" />
     </task>
     <servers />
   </component>
@@ -93,7 +95,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Response.cpp</url>
-          <line>12</line>
+          <line>13</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">

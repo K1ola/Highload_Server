@@ -19,7 +19,9 @@ void Config::ReadConfig() {
         auto document_root_pos = content.find("document_root");
         if (document_root_pos != std::string::npos)
         {
-            document_root = content.substr(document_root_pos + std::string(document_root).size() + 1);
+            size_t start_pos = document_root_pos + std::string(document_root).size() + 1;
+            size_t end_pos = content.find(" ", document_root_pos + std::string(document_root).size() + 1);
+            document_root = content.substr(start_pos, end_pos - start_pos);
         }
 
         auto thread_limit_pos = content.find("thread_limit");
@@ -27,9 +29,9 @@ void Config::ReadConfig() {
             thread_limit = std::atoi(content.substr(thread_limit_pos + std::string("thread_limit").size() + 1).c_str());
         }
 
-        auto document_root_debug_pos = content.find("document_root_debug");
+        auto debug_document_root_pos = content.find("debug_document_root");
         if (thread_limit_pos != std::string::npos) {
-            document_root_debug = content.substr(document_root_debug_pos + std::string("document_root_debug").size() + 1);
+            document_root_debug = content.substr(debug_document_root_pos + std::string("debug_document_root").size() + 1);
         }
 
     }

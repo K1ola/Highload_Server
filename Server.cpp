@@ -28,7 +28,7 @@ void Server::Start(boost::asio::io_service& io_service)
             Request request;
             request.Parse(str);
 
-            Response response(config.document_root_debug, request.url);
+            Response response(config.document_root, request.url);
 
             std::string response_str;
 

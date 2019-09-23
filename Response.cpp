@@ -10,6 +10,7 @@ Response::Response(std::string _path, std::string _url): path(_path), url(_url)
 std::string Response::Get_Response()
 {
     std::string full_path = path + url;
+    std::cout << full_path << std::endl;
     std::string root_directory;
     if (!url_decode(full_path, root_directory)) {
         return Bad_Request();
