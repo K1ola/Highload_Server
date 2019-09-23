@@ -22,40 +22,47 @@ void Server::Start(boost::asio::io_service& io_service)
             acceptor.accept(socket);
 
             boost::asio::streambuf input_buffer;
-            auto s = boost::asio::read_until(socket, input_buffer, '\n\n');
+            boost::system::error_code ec;
+            auto s = boost::asio::read_until(socket, input_buffer, '\n\n', ec);
             std::string str((std::istreambuf_iterator<char>(&input_buffer)), std::istreambuf_iterator<char>());
 
             Request request;
             request.Parse(str);
 
             Response response(config.document_root, request.url);
+//            Response response(config.document_root_debug, request.url);
 
             std::string response_str;
 
-            if (!request.correct_request)
-            {
-                response_str = response.Not_Alloved();
+
+            if (!ec || ec == boost::asio::error::eof) {
+                if (!request.correct_request)
+                {
+                    response_str = response.Not_Alloved();
+                }
+
+                if (request.method == "GET")
+                {
+                    response_str = response.Get_Response();
+                }
+                if (request.method == "HEAD")
+                {
+                    response_str = response.Head_Response();
+                }
+
+                boost::system::error_code ignored_error;
+                size_t request_length = response_str.size();
+                auto buffer = boost::asio::buffer(response_str, request_length);
+
+                //std::string sss(boost::asio::buffer_cast<const char*>(buffer), request_length);
+
+
+                //std::cout << sss.c_str() << std::endl;
+
+                int bytes_send = boost::asio::write(socket, buffer);
             }
 
-            if (request.method == "GET")
-            {
-                response_str = response.Get_Response();
-            }
-            if (request.method == "HEAD")
-            {
-                response_str = response.Head_Response();
-            }
 
-            boost::system::error_code ignored_error;
-            size_t request_length = response_str.size();
-            auto buffer = boost::asio::buffer(response_str, request_length);
-
-            //std::string sss(boost::asio::buffer_cast<const char*>(buffer), request_length);
-
-
-            //std::cout << sss.c_str() << std::endl;
-
-            int bytes_send = boost::asio::write(socket, buffer);
             socket.close();
         }
     }

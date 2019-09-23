@@ -13,12 +13,9 @@
   <component name="ChangeListManager">
     <list default="true" id="a814c5a2-7efe-43f7-b644-73b3bbf562e7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Config.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Highload_DZ1" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Response.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Response.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Server.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Server.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Highload_DZ1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/httpd.conf" beforeDir="false" afterPath="$PROJECT_DIR$/httpd.conf" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +69,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1569253196980</updated>
-      <workItem from="1569253199693" duration="3975000" />
+      <workItem from="1569253199693" duration="5073000" />
     </task>
     <servers />
   </component>
@@ -95,13 +92,18 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Response.cpp</url>
-          <line>13</line>
+          <line>12</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/Server.cpp</url>
-          <line>49</line>
-          <option name="timeStamp" value="3" />
+          <line>38</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Server.cpp</url>
+          <line>26</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
