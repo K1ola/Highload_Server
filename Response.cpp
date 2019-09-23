@@ -3,7 +3,8 @@
 #include <sstream>
 #include "Response.h"
 
-Response::Response(std::string _path, std::string _url): path(_path), url(_url)
+Response::Response(std::string _path, std::string _url,  std::unordered_map<std::string, std::string> _map)
+    : path(_path), url(_url), map(_map)
 {
 }
 
@@ -28,6 +29,7 @@ std::string Response::Get_Response()
     }
 
     if (!get_file())
+//    if (map.find(this->path) != map.end())
     {
         return Not_Found();
     }
@@ -39,16 +41,17 @@ std::string Response::Get_Response()
 
     if (this->path.find('.') == std::string::npos)
     {
-        this->path += "/index.html";
+        this->path += "index.html";
     }
 
-
     if (!get_file())
+//    if (map.find(this->path) != map.end())
     {
         return Forbidden();
     }
 
-    auto file_data = send_file();
+//    auto file_data = send_file();
+    auto file_data = this->map[this->path];
 
     return ok_headers(OK, get_file_length(), get_file_type()) + file_data;
 }

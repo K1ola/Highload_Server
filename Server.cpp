@@ -30,8 +30,9 @@ void Server::Start(boost::asio::io_service& io_service)
             Request request;
             request.Parse(str);
 
-            Response response(config.document_root, request.url);
-//            Response response(config.document_root_debug, request.url);
+            //TODO check
+//            Response response(config.document_root, request.url, map);
+            Response response(config.document_root_debug, request.url, map);
 
             std::string response_str;
 
@@ -74,6 +75,7 @@ void Server::Start(boost::asio::io_service& io_service)
 }
 
 void Server::getFilesToHashMap() {
+    //TODO check
     const boost::filesystem::path& dir_path(config.document_root_debug + "/httptest");
     find_file(dir_path);
 }
@@ -97,7 +99,7 @@ void Server::find_file(const boost::filesystem::path& p)
                     std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
 
                     map[current_file] = content;
-                    std::cout << current_file << std::endl;
+                   // std::cout << current_file << std::endl;
                 }
                 else
                 {
