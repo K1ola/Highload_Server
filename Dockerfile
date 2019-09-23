@@ -8,7 +8,7 @@ ADD ./ ./
 #RUN apt-get install -y git cmake gcc-8 g++-8 libboost-all-dev; \
 #    update-alternatives --remove-all gcc; \
 #    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 80 --slave /usr/bin/g++ g++ /usr/bin/g++-8;
-COPY ./httptest /var/www/html/httptest
+#COPY ./httptest /var/www/html/httptest
 
 RUN g++ *.cpp -pthread -lboost_thread -lboost_filesystem -std=c++11 -lboost_system -o Highload_DZ1
 
