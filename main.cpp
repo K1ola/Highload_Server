@@ -6,7 +6,7 @@
 
 int main()
 {
-    unsigned short port = 8887;
+    unsigned short port = 80;
     Server server(port);
     try
     {
