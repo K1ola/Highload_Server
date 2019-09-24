@@ -42,15 +42,8 @@ void Server::session(boost::asio::ip::tcp::socket socket)
                 }
 
                 boost::system::error_code ignored_error;
-                //size_t request_length = response_str.size();
-                //auto buffer = boost::asio::buffer(response_str, request_length);
-
-                //std::string sss(boost::asio::buffer_cast<const char*>(buffer), request_length);
-
-
-                //std::cout << sss.c_str() << std::endl;
                 int bytes_send = boost::asio::write(socket, boost::asio::buffer(response_str),
-                        boost::asio::transfer_all(), ignored_error);
+                    boost::asio::transfer_all(), ignored_error);
             }
             break;
         }
