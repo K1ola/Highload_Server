@@ -5,34 +5,23 @@
 #include <string>
 #include <iostream>
 
-//void Server::session(boost::asio::ip::tcp::socket socket)
-//{
-//
-//}
+const int max_length = 1024;
 
-
-void Server::Start(boost::asio::io_service& io_service)
+void Server::session(boost::asio::ip::tcp::socket socket)
 {
-    try
-    {
-        tcp::acceptor acceptor(io_service, tcp::endpoint(tcp::v4(), port));
-
-        for (;;)
-        {
-            tcp::socket socket(io_service);
-            acceptor.accept(socket);
-
+    try {
+        for (;;) {
             boost::asio::streambuf input_buffer;
             boost::system::error_code ec;
-            auto s = boost::asio::read_until(socket, input_buffer, '\n\n', ec);
+            auto s = boost::asio::read_until(socket, input_buffer, '\n', ec);
             std::string str((std::istreambuf_iterator<char>(&input_buffer)), std::istreambuf_iterator<char>());
 
             Request request;
             request.Parse(str);
 
             //TODO check
+//            Response response(config.document_root_debug, request.url);//, map);
             Response response(config.document_root, request.url);//, map);
-//            Response response(config.document_root_debug, request.url, map);
 
             std::string response_str;
 
@@ -53,24 +42,34 @@ void Server::Start(boost::asio::io_service& io_service)
                 }
 
                 boost::system::error_code ignored_error;
-                size_t request_length = response_str.size();
-                auto buffer = boost::asio::buffer(response_str, request_length);
+                //size_t request_length = response_str.size();
+                //auto buffer = boost::asio::buffer(response_str, request_length);
 
                 //std::string sss(boost::asio::buffer_cast<const char*>(buffer), request_length);
 
 
                 //std::cout << sss.c_str() << std::endl;
-
-                int bytes_send = boost::asio::write(socket, buffer);
+                int bytes_send = boost::asio::write(socket, boost::asio::buffer(response_str),
+                        boost::asio::transfer_all(), ignored_error);
             }
-
-
-            socket.close();
+            break;
         }
     }
     catch (std::exception& e)
     {
-        std::cerr << e.what() << std::endl;
+        std::cerr << "Exception in thread: " << e.what() << "\n";
+    }
+}
+
+
+void Server::Start(boost::asio::io_service& io_service)
+{
+    tcp::acceptor a(io_service, tcp::endpoint(tcp::v4(), port));
+    for (;;)
+    {
+        tcp::socket sock(io_service);
+        a.accept(sock);
+        std::thread(&Server::session, this, std::move(sock)).detach();
     }
 }
 

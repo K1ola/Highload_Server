@@ -45,8 +45,9 @@ private:
     std::string get_file_type();
     int get_file_length();
     bool get_file();
-    bool url_decode(std::string&, std::string&);
+    std::string url_decode(std::string);
     std::string send_file();
+    bool is_dir(std::string);
 
     std::string url;
     std::string root;// = R"(/var/www/html)";

@@ -15,65 +15,82 @@ Response::Response(std::string _path, std::string _url)
 
 std::string Response::Get_Response()
 {
-    std::string full_path = path + url;
-    std::string root_directory;
-    if (!url_decode(full_path, root_directory)) {
+    std::string full_path = url_decode(path + url);
+
+    if (full_path.empty())
+    {
         return Bad_Request();
     }
 
-    this -> path = root_directory;
-
     if (url.find('?') != std::string::npos)
     {
-        this->path = root_directory.substr(0, root_directory.find('?'));
+        full_path = full_path.substr(0, full_path.find('?'));
     }
 
     if (url.find("etc") != std::string::npos)
     {
         return Forbidden();
     }
+    std::ifstream file;
 
-    if (!get_file())
-//    if (map.find(this->path) == map.end())
+    if (is_dir(full_path))
     {
-        return Not_Found();
+        full_path += "index.html";
+        file.open(full_path);
+
+        if (file.fail())
+        {
+            return Forbidden();
+        }
+    }
+    else
+    {
+        file.open(full_path);
+
+        if (file.fail())
+        {
+            return Not_Found();
+        }
     }
 
-    if (url == "/")
-    {
-        url = "/index.html";
-    }
-
-    if (this->path.find('.') == std::string::npos)
-    {
-        this->path += "index.html";
-    }
-
-    if (!get_file())
-//    if (map.find(this->path) == map.end())
-    {
-        return Forbidden();
-    }
-
-    auto file_data = send_file();
+    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+//    auto file_data = content;
 //    auto file_data = this->map[this->path];
 
-    return ok_headers(OK, get_file_length(), get_file_type()) + file_data;
+    return ok_headers(OK, content.size(), get_file_type()) + content;
 }
 
 std::string Response::Head_Response()
 {
-    if (!get_file())
+    std::ifstream file;
+    std::string full_path = url_decode(path + url);
+    if (is_dir(full_path))
     {
-        return Not_Found();
-    }
-    this->path += url;
-    if (this->path.find('.') == std::string::npos)
-    {
-        this->path += "index.html";
-    }
+        full_path += "index.html";
+        file.open(full_path);
 
-    return ok_headers(OK, get_file_length(), get_file_type());
+        if (file.fail())
+        {
+            return Forbidden();
+        }
+    }
+    else
+    {
+        file.open(full_path);
+
+        if (file.fail())
+        {
+            return Not_Found();
+        }
+    }
+//    this->path += url;
+//    if (this->path.find('.') == std::string::npos)
+//    {
+//        this->path += "index.html";
+//    }
+
+    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    return ok_headers(OK, content.size(), get_file_type());
  }
 
 std::string Response::Bad_Request()
@@ -171,10 +188,9 @@ bool Response::get_file()
     return true;
 }
 
-bool Response::url_decode(std::string& input, std::string& result)
+std::string Response::url_decode(std::string input)
 {
-    result.clear();
-    result.reserve(input.size());
+    std::string result;
     for (std::size_t i = 0; i < input.size(); ++i) {
         if (input[i] == '%') {
             if (i + 3 <= input.size()) {
@@ -185,11 +201,11 @@ bool Response::url_decode(std::string& input, std::string& result)
                     i += 2;
                 }
                 else {
-                    return false;
+                    return "";
                 }
             }
             else {
-                return false;
+                return "";
             }
         }
         else if (input[i] == '+') {
@@ -199,7 +215,7 @@ bool Response::url_decode(std::string& input, std::string& result)
             result += input[i];
         }
     }
-    return true;
+    return result;
 }
 
 std::string Response::send_file()
@@ -210,3 +226,12 @@ std::string Response::send_file()
     return content;
 }
 
+bool Response::is_dir(std::string path)
+{
+    for (int i=path.size()-1; i>=0; i--)
+    {
+        if (path[i] == '/') break;
+        if (path[i] == '.') return false;
+    }
+    return true;
+}

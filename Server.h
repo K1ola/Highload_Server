@@ -35,7 +35,7 @@ public:
     Config config;
 private:
     unsigned short port = 80;
-    //void session(boost::asio::ip::tcp::socket);
+    void session(boost::asio::ip::tcp::socket);
 //    void getFilesToHashMap();
 //    void find_file(const boost::filesystem::path& dir_path);
 //

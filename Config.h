@@ -15,6 +15,8 @@ public:
     Config() = default;
     void ReadConfig();
     std::string CurrentPath();
+private:
+	std::string GetValue(std::string content, std::string key);
 };
 
 

@@ -1,7 +1,26 @@
 #include <cstring>
 #include <fstream>
 #include "Config.h"
+
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <unistd.h>
+#endif
+
+std::string Config::GetValue(std::string content, std::string key)
+{
+	auto beg_pos = content.find(key);
+	if (beg_pos == std::string::npos) return "";
+	beg_pos += key.size();
+	auto end_pos = content.find_first_of("#\r\n", beg_pos);
+	if (end_pos == std::string::npos) end_pos = content.length();
+	std::string item = content.substr(beg_pos, end_pos-beg_pos);
+	auto space_pos = item.find_first_not_of(" ");
+	if (space_pos != std::string::npos) item = item.erase(0, space_pos);
+	while (item.back() == ' ') item.pop_back();
+	return item;
+}
 
 void Config::ReadConfig() {
     std::string full_path = CurrentPath() + "/../" +  config_path;
@@ -10,37 +29,30 @@ void Config::ReadConfig() {
     if (conf_file_stream.is_open()) {
         std::string content((std::istreambuf_iterator<char>(conf_file_stream)), std::istreambuf_iterator<char>());
 
-        auto cpu_limit_pos = content.find("cpu_limit");
-        if (cpu_limit_pos != std::string::npos)
-        {
-            cpu_limit = std::atoi(content.substr(cpu_limit_pos + std::string("cpu_limit").size() + 1).c_str());
-        }
+        std::string value = GetValue(content, "cpu_limit");
+		if (!value.empty()) cpu_limit = std::stoi(value);
 
-        auto document_root_pos = content.find("document_root");
-        if (document_root_pos != std::string::npos)
-        {
-            size_t start_pos = document_root_pos + std::string(document_root).size() + 1;
-            size_t end_pos = content.find(" ", document_root_pos + std::string(document_root).size() + 1);
-            document_root = content.substr(start_pos, end_pos - start_pos);
-        }
+		value = GetValue(content, "document_root");
+		if (!value.empty()) document_root = value;
 
-        auto thread_limit_pos = content.find("thread_limit");
-        if (thread_limit_pos != std::string::npos) {
-            thread_limit = std::atoi(content.substr(thread_limit_pos + std::string("thread_limit").size() + 1).c_str());
-        }
+        value = GetValue(content, "thread_limit");
+        if (!value.empty()) thread_limit = std::stoi(value);
 
-        auto debug_document_root_pos = content.find("debug_document_root");
-        if (thread_limit_pos != std::string::npos) {
-            document_root_debug = content.substr(debug_document_root_pos + std::string("debug_document_root").size() + 1);
-        }
-
+        value = GetValue(content, "debug_document_root");
+        if (!value.empty()) document_root_debug = value;
     }
     conf_file_stream.close();
 }
 
 std::string Config::CurrentPath() {
-    const unsigned short MAX_PATH = 1024;
+#ifndef _WIN32
+	const unsigned short MAX_PATH = 1024;
+#endif
     char buff[MAX_PATH];
-    getcwd(buff, sizeof(buff));
-    return std::string(buff);
+#ifdef _WIN32
+	GetCurrentDirectoryA(sizeof(buff), buff);
+#else
+	getcwd(buff, sizeof(buff));
+#endif
+	return std::string(buff);
 }
