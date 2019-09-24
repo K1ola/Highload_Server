@@ -1,6 +1,9 @@
 #include <fstream>
 #include <ctime>
 #include <sstream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
 #include "Response.h"
 
 Response::Response(std::string _path, std::string _url,  std::unordered_map<std::string, std::string> _map)
@@ -12,6 +15,7 @@ std::string Response::Get_Response()
 {
     std::string full_path = path + url;
     std::string root_directory;
+
     if (!url_decode(full_path, root_directory)) {
         return Bad_Request();
     }
@@ -28,7 +32,11 @@ std::string Response::Get_Response()
         return Forbidden();
     }
 
-    if (!get_file())
+    FILE *fp;
+    struct stat buff;
+
+    if((fp=fopen(this->path.c_str(), "rb"))==NULL)
+//    if (!get_file())
 //    if (map.find(this->path) == map.end())
     {
         return Not_Found();
@@ -44,21 +52,30 @@ std::string Response::Get_Response()
         this->path += "index.html";
     }
 
-    if (!get_file())
+    if((fp=fopen(this->path.c_str(), "rb"))==NULL)
+//    if (!get_file())
 //    if (map.find(this->path) == map.end())
     {
         return Forbidden();
     }
 
+    /* заполнение структуры типа stat */
+    stat(this->path.c_str(), &buff);
     auto file_data = send_file();
 //    auto file_data = this->map[this->path];
+//    auto file_data = buff.st_dev;
 
-    return ok_headers(OK, get_file_length(), get_file_type()) + file_data;
+    fclose(fp);
+    return ok_headers(OK, buff.st_size, get_file_type()) + file_data;
 }
 
 std::string Response::Head_Response()
 {
-    if (!get_file())
+    FILE *fp;
+    struct stat buff;
+
+    if((fp=fopen(this->path.c_str(), "rb"))==NULL)
+//    if (!get_file())
     {
         return Not_Found();
     }
@@ -68,7 +85,9 @@ std::string Response::Head_Response()
         this->path += "index.html";
     }
 
-    return ok_headers(OK, get_file_length(), get_file_type());
+    stat(this->path.c_str(), &buff);
+
+    return ok_headers(OK, buff.st_size, get_file_type());
  }
 
 std::string Response::Bad_Request()
