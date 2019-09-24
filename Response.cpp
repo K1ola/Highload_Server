@@ -3,8 +3,13 @@
 #include <sstream>
 #include "Response.h"
 
-Response::Response(std::string _path, std::string _url,  std::unordered_map<std::string, std::string> _map)
-    : path(_path), url(_url), map(_map)
+//Response::Response(std::string _path, std::string _url,  std::unordered_map<std::string, std::string> _map)
+//    : path(_path), url(_url), map(_map)
+//{
+//}
+
+Response::Response(std::string _path, std::string _url)
+        : path(_path), url(_url)
 {
 }
 

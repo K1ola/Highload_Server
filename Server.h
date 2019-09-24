@@ -13,7 +13,7 @@
 #include <string>
 #include <boost/asio.hpp>
 #include <thread>
-#include <unordered_map>
+//#include <unordered_map>
 #include "Request.h"
 #include "Response.h"
 #include "Config.h"
@@ -35,11 +35,11 @@ public:
     Config config;
 private:
     unsigned short port = 80;
-    void session(boost::asio::ip::tcp::socket);
-    void getFilesToHashMap();
-    void find_file(const boost::filesystem::path& dir_path);
-
-    std::unordered_map<std::string, std::string> map;
+    //void session(boost::asio::ip::tcp::socket);
+//    void getFilesToHashMap();
+//    void find_file(const boost::filesystem::path& dir_path);
+//
+//    std::unordered_map<std::string, std::string> map;
 };
 
 

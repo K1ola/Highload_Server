@@ -4,14 +4,14 @@
 
 #include <string>
 #include <iostream>
-#include <unordered_map>
+//#include <unordered_map>
 
 
 class Response
 {
 public:
     //Response();
-    Response(std::string, std::string,std::unordered_map<std::string, std::string>);
+    Response(std::string, std::string);//, std::unordered_map<std::string, std::string>);
     std::string Get_Response();
     std::string Head_Response();
 
@@ -52,7 +52,7 @@ private:
     std::string root;// = R"(/var/www/html)";
     std::string path;// = R"(/var/www/html)";
 
-    std::unordered_map<std::string, std::string> map;
+    //std::unordered_map<std::string, std::string> map;
 };
 
 
