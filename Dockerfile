@@ -12,6 +12,6 @@ ADD ./ ./
 
 RUN g++ *.cpp -pthread -lboost_thread -lboost_filesystem -std=c++11 -lboost_system -o Highload_DZ1
 
-EXPOSE 8887
+EXPOSE 80
 
 CMD ./Highload_DZ1
