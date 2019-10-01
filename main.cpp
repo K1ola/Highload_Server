@@ -10,9 +10,7 @@ int main()
     Server server(port);
     try
     {
-        boost::asio::io_service io_service;
-
-        server.Start(io_service);
+        server.Start();
     }
     catch (std::exception& e)
     {
