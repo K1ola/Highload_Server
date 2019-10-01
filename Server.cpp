@@ -48,6 +48,7 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
     catch (...)
     {
     }
+    session->GetSocket().close();
 }
 
 
