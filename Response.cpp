@@ -35,6 +35,7 @@ std::string Response::Get_Response()
 
     if (is_dir(full_path))
     {
+        handle_last_character(full_path);
         full_path += "index.html";
 //        file.open(full_path);
 
@@ -66,7 +67,7 @@ std::string Response::Head_Response()
     std::string full_path = url_decode(path + url);
     if (is_dir(full_path))
     {
-        //TODO check '/' at the end (std::string::back() != '/')
+        handle_last_character(full_path);
         full_path += "index.html";
         file.open(full_path);
 
@@ -235,4 +236,10 @@ bool Response::is_dir(std::string path)
         if (path[i] == '.') return false;
     }
     return true;
+}
+
+void Response::handle_last_character(std::string& str)
+{
+    if (str.back() == '/') return;;
+    str.back() += '/';
 }

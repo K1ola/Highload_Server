@@ -54,6 +54,8 @@ private:
     std::string path;// = R"(/var/www/html)";
 
     std::unordered_map<std::string, std::string> map;
+
+    void handle_last_character(std::string &str);
 };
 
 
