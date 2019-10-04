@@ -3,15 +3,15 @@
 #include <sstream>
 #include "Response.h"
 
-//Response::Response(std::string _path, std::string _url,  std::unordered_map<std::string, std::string> _map)
-//    : path(_path), url(_url), map(_map)
-//{
-//}
-
-Response::Response(std::string _path, std::string _url)
-        : path(_path), url(_url)
+Response::Response(std::string _path, std::string _url,  std::unordered_map<std::string, std::string> _map)
+    : path(_path), url(_url), map(_map)
 {
 }
+//
+//Response::Response(std::string _path, std::string _url)
+//        : path(_path), url(_url)
+//{
+//}
 
 std::string Response::Get_Response()
 {
@@ -36,26 +36,26 @@ std::string Response::Get_Response()
     if (is_dir(full_path))
     {
         full_path += "index.html";
-        file.open(full_path);
+//        file.open(full_path);
 
-        if (file.fail())
+        if (map.find(full_path) == map.end())
+//        if (file.fail())
         {
             return Forbidden();
         }
     }
     else
     {
-        file.open(full_path);
-
-        if (file.fail())
+//        file.open(full_path);
+        if (map.find(full_path) == map.end())
+//        if (file.fail())
         {
             return Not_Found();
         }
     }
 
-    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-//    auto file_data = content;
-//    auto file_data = this->map[this->path];
+//    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    std::string content = map[full_path];
 
     return ok_headers(OK, content.size(), get_file_type()) + content;
 }
@@ -66,6 +66,7 @@ std::string Response::Head_Response()
     std::string full_path = url_decode(path + url);
     if (is_dir(full_path))
     {
+        //TODO check '/' at the end (std::string::back() != '/')
         full_path += "index.html";
         file.open(full_path);
 

@@ -108,6 +108,18 @@
 		<Unit filename="/home/kate/CLionProjects/Highload_Server/Server.h">
 			<Option target="Highload_DZ1"/>
 		</Unit>
+		<Unit filename="/home/kate/CLionProjects/Highload_Server/Session.cpp">
+			<Option target="Highload_DZ1"/>
+		</Unit>
+		<Unit filename="/home/kate/CLionProjects/Highload_Server/Session.h">
+			<Option target="Highload_DZ1"/>
+		</Unit>
+		<Unit filename="/home/kate/CLionProjects/Highload_Server/ThreadPool.cpp">
+			<Option target="Highload_DZ1"/>
+		</Unit>
+		<Unit filename="/home/kate/CLionProjects/Highload_Server/ThreadPool.h">
+			<Option target="Highload_DZ1"/>
+		</Unit>
 		<Unit filename="/home/kate/CLionProjects/Highload_Server/main.cpp">
 			<Option target="Highload_DZ1"/>
 		</Unit>

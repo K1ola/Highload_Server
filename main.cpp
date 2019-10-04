@@ -7,12 +7,10 @@
 int main()
 {
     unsigned short port = 80;
-    Server server(port);
+    Server server(port, 20);    // 20 - 630rps, 200 - 540rps, 1 - 500rps
     try
     {
-        boost::asio::io_service io_service;
-
-        server.Start(io_service);
+        server.Start();
     }
     catch (std::exception& e)
     {
