@@ -66,8 +66,8 @@ void Server::Start()
 
 void Server::getFilesToHashMap() {
     //TODO check
-//    const boost::filesystem::path& dir_path(config.document_root_debug + "/httptest");
     const boost::filesystem::path& dir_path(config.document_root + "/httptest");
+//    const boost::filesystem::path& dir_path(config.document_root_debug + "/httptest");
     find_file(dir_path);
 }
 

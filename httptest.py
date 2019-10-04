@@ -44,7 +44,7 @@ class HttpServer(unittest.TestCase):
     data = r.read()
     server = r.getheader("Server")
     self.assertIsNotNone(server)
-
+  #
   def test_directory_index(self):   #OK
     """directory index file exists"""
     self.conn.request("GET", "/httptest/dir2/")
