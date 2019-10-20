@@ -7,10 +7,9 @@
 
 void Server::RunTask(boost::shared_ptr<Session> session) {
     try {
-//        for (;;) {
             boost::asio::streambuf input_buffer;
             boost::system::error_code ec;
-            auto s = boost::asio::read_until(session->GetSocket(), input_buffer, "\n", ec);
+            boost::asio::read_until(session->GetSocket(), input_buffer, "\n", ec);
             std::string str((std::istreambuf_iterator<char>(&input_buffer)), std::istreambuf_iterator<char>());
 
             Request request;
@@ -39,16 +38,21 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
                 }
 
                 boost::system::error_code ignored_error;
-                int bytes_send = boost::asio::write(session->GetSocket(), boost::asio::buffer(response_str),
+                boost::asio::write(session->GetSocket(), boost::asio::buffer(response_str),
                                                     boost::asio::transfer_all(), ignored_error);
-//            }
-//            break;
+                //session->GetSocket().close();
         }
     }
+//
+//    catch (std::exception& e)
+//    {
+//        std::cout << "AAAA" << "\n";
+//        std::cerr << "Exception: " << e.what() << "\n";
+//    }
     catch (...)
     {
     }
-    session->GetSocket().close();
+    //session->GetSocket().close();
 }
 
 

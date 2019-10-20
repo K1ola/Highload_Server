@@ -43,14 +43,10 @@ private:
     std::string ok_headers(const std::string, int, const std::string);
     std::string not_ok_headers(const std::string);
     std::string get_file_type();
-    int get_file_length();
-    bool get_file();
     std::string url_decode(std::string);
-    std::string send_file();
     bool is_dir(std::string);
 
     std::string url;
-    std::string root;// = R"(/var/www/html)";
     std::string path;// = R"(/var/www/html)";
 
     std::unordered_map<std::string, std::string> map;
