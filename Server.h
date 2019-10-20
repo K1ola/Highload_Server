@@ -39,7 +39,7 @@ public:
     Server(unsigned short _port, int _threadsCount = 0)
             : Acceptor(IoService, tcp::endpoint(tcp::v4(), _port))
             , port(_port),
-            ThreadPool(_threadsCount) { config.ReadConfig(); getFilesToHashMap(); };
+             ThreadPool(_threadsCount) { config.ReadConfig(); getFilesToHashMap(); };
     void Start();
     void RunTask(boost::shared_ptr<Session> session);
 

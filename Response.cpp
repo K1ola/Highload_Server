@@ -171,25 +171,6 @@ std::string Response::get_file_type()
     return CONTENT_TYPE_HTML;
 }
 
-int Response::get_file_length()
-{
-    //auto path = root + url;
-    std::ifstream file(path, std::ios::binary | std::ios::ate);
-    int len = file.tellg();
-    return len;
-}
-
-bool Response::get_file()
-{
-    //auto path = root + url;
-    std::ifstream file(path);
-    if (file.fail())
-    {
-        return false;
-    }
-    return true;
-}
-
 std::string Response::url_decode(std::string input)
 {
     std::string result;
@@ -220,13 +201,6 @@ std::string Response::url_decode(std::string input)
     return result;
 }
 
-std::string Response::send_file()
-{
-    //auto path = root + url;
-    std::ifstream file(path, std::ios::binary);
-    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
-    return content;
-}
 
 bool Response::is_dir(std::string path)
 {
