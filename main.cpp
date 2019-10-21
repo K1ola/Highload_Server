@@ -7,8 +7,8 @@
 int main()
 {
     //TODO
-    unsigned short port = 80;
-//    unsigned short port = 8081;
+//    unsigned short port = 80;
+    unsigned short port = 8081;
     Server server(port, 20);    // 20 - 630rps, 200 - 540rps, 1 - 500rps
     try
     {

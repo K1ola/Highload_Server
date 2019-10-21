@@ -16,13 +16,13 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
             request.Parse(str);
 
             //TODO check
-//            Response response(config.document_root_debug, request.url, map);
-            Response response(config.document_root, request.url, map);
-
+            Response response(config.document_root_debug, request.url, map);
+////            Response response(config.document_root, request.url, map);
+//
             std::string response_str;
-
-
-            if (!ec || ec == boost::asio::error::eof) {
+//
+//
+//            if (!ec || ec == boost::asio::error::eof) {
                 if (!request.correct_request)
                 {
                     response_str = response.Not_Alloved();
@@ -30,6 +30,7 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
 
                 if (request.method == "GET")
                 {
+//                    response_str = "HTTP/1.0 200 OK\nDate: Sun Oct 20 17:37:17 2019\nServer: Highload Static Server\nContent-Length: 954824\nContent-Type: text/html\nConnection: Closed\n";
                     response_str = response.Get_Response();
                 }
                 if (request.method == "HEAD")
@@ -38,15 +39,30 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
                 }
 
                 boost::system::error_code ignored_error;
-                boost::asio::write(session->GetSocket(), boost::asio::buffer(response_str),
+//                session->GetSocket().send(boost::asio::buffer(response_str, response.response_len));
+                boost::asio::write(session->GetSocket(), boost::asio::buffer(response_str, response.response_len),
                                                     boost::asio::transfer_all(), ignored_error);
-                //session->GetSocket().close();
-        }
+//                //session->GetSocket().close();
+//            } else {
+//                std::cout << "Acceptor error" << std::endl;
+//                return;
+//            }
+//        char data[1024];
+
+//        boost::system::error_code error;
+//        size_t length = session->GetSocket().read_some(boost::asio::buffer(data), error);
+//        if (error == boost::asio::error::eof)
+//            return; // Connection closed cleanly by peer.
+//        else if (error)
+//            throw boost::system::system_error(error); // Some other error.
+
+//        const std::string data1("HTTP/1.0 200 OK\nDate: Sun Oct 20 17:37:17 2019\nServer: Highload Static Server\nContent-Length: 954824\nContent-Type: text/html\nConnection: Closed\n");
+
+//        boost::asio::write(session->GetSocket(), boost::asio::buffer(data1));
     }
 //
 //    catch (std::exception& e)
 //    {
-//        std::cout << "AAAA" << "\n";
 //        std::cerr << "Exception: " << e.what() << "\n";
 //    }
     catch (...)
@@ -62,16 +78,21 @@ void Server::Start()
     for (;;)
     {
         NewSession = boost::shared_ptr<Session>(new Session(IoService));
-        Acceptor.accept(NewSession->GetSocket());
-        AddTask(NewSession);
+        boost::system::error_code error;
+        Acceptor.accept(NewSession->GetSocket(), error);
+        if (!error) {
+            AddTask(NewSession);
+        } else {
+            std::cout << "Acceptor error" << std::endl;
+        }
     }
 }
 
 
 void Server::getFilesToHashMap() {
     //TODO check
-    const boost::filesystem::path& dir_path(config.document_root + "/httptest");
-//    const boost::filesystem::path& dir_path(config.document_root_debug + "/httptest");
+//    const boost::filesystem::path& dir_path(config.document_root + "/httptest");
+    const boost::filesystem::path& dir_path(config.document_root_debug + "/httptest");
     find_file(dir_path);
 }
 

@@ -58,7 +58,10 @@ std::string Response::Get_Response()
 //    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     std::string content = map[full_path];
 
-    return ok_headers(OK, content.size(), get_file_type()) + content;
+    auto res = ok_headers(OK, content.size(), get_file_type()) + content;
+    response_len = res.size();
+    return res;
+//    return "HTTP/1.0 200 OK\nDate: Sun Oct 20 17:37:17 2019\nServer: Highload Static Server\nContent-Length: 954824\nContent-Type: text/html\nConnection: Closed\n";
 }
 
 std::string Response::Head_Response()
@@ -127,11 +130,12 @@ std::string Response::ok_headers(const std::string status, int length, const std
 {
     std::string response;
     response = status +
-               DATE + current_time() + "\r\n" +
                SERVER +
+               CONNECTION +
+               "Wed, 21 Oct 2015 07:28:00 GMT"  + "\r\n" +
                CONTENT_LENGTH + std::to_string(length)+ "\r\n" +
                type +
-               CONNECTION + "\r\n";
+               "\r\n\r\n";
     return response;
 }
 
@@ -139,7 +143,7 @@ std::string Response::not_ok_headers(const std::string status)
 {
     std::string response;
     response = status +
-               DATE + current_time() + "\r\n" +
+               "Wed, 21 Oct 2015 07:28:00 GMT" + "\r\n" +
                SERVER +
                CONNECTION + "\r\n";
     return response;

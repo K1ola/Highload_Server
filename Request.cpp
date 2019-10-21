@@ -14,7 +14,7 @@ void Request::Parse(std::string request_str)
     }
 
     request_string >> url >> version;
-    request_string.ignore(100, '\n'); // \n after HTTP/1.1
+    request_string.ignore(100, '\n'); // \n after HTTP/1.0
     request_string.ignore(100, '\n'); // Host: localhost:8000
     request_string.ignore(100, ':');  // Accept-Encoding:
     request_string >> encoding;
