@@ -20,12 +20,14 @@ public:
     std::string Not_Found();
     std::string Not_Alloved();
 
+    int response_len = 0;
+
 public:
-    const std::string OK = std::string("HTTP/1.1 200 OK\r\n");
-    const std::string BAD_REQUEST = std::string("HTTP/1.1 400 Bad Request\r\n");
-    const std::string FORBIDDEN = std::string("HTTP/1.1 403 Forbidden\r\n");
-    const std::string NOT_FOUND = std::string("HTTP/1.1 404 Not Found\r\n");
-    const std::string NOT_ALLOWED = std::string("HTTP/1.1 405 Method Not Allowed\r\n");
+    const std::string OK = std::string("HTTP/1.0 200 OK\r\n");
+    const std::string BAD_REQUEST = std::string("HTTP/1.0 400 Bad Request\r\n");
+    const std::string FORBIDDEN = std::string("HTTP/1.0 403 Forbidden\r\n");
+    const std::string NOT_FOUND = std::string("HTTP/1.0 404 Not Found\r\n");
+    const std::string NOT_ALLOWED = std::string("HTTP/1.0 405 Method Not Allowed\r\n");
 
     const std::string DATE = std::string("Date: ");
     const std::string SERVER = std::string("Server: Highload Static Server\r\n");
