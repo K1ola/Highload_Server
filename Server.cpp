@@ -16,8 +16,8 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
             request.Parse(str);
 
             //TODO check
-//            Response response(config.document_root_debug, request.url, map);
-            Response response(config.document_root, request.url, map);
+            Response response(config.document_root_debug, request.url, map);
+//            Response response(config.document_root, request.url, map);
 //
             std::string response_str;
 //
@@ -38,8 +38,8 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
                 }
 
                 boost::system::error_code ignored_error;
-                boost::asio::write(session->GetSocket(), boost::asio::buffer(response_str, response.response_len + 10),
-                                                    boost::asio::transfer_all(), ignored_error);
+                boost::asio::write(session->GetSocket(), boost::asio::buffer(response_str));
+//                                                    boost::asio::transfer_all(), ignored_error);
 //                //session->GetSocket().close();
 //            } else {
 //                std::cout << "Acceptor error" << std::endl;
@@ -89,8 +89,8 @@ void Server::Start()
 
 void Server::getFilesToHashMap() {
     //TODO check
-    const boost::filesystem::path& dir_path(config.document_root + "/httptest");
-//    const boost::filesystem::path& dir_path(config.document_root_debug + "/httptest");
+//    const boost::filesystem::path& dir_path(config.document_root + "/httptest");
+    const boost::filesystem::path& dir_path(config.document_root_debug + "/httptest");
     find_file(dir_path);
 }
 

@@ -7,9 +7,9 @@
 int main()
 {
     //TODO
-    unsigned short port = 80;
-//    unsigned short port = 8081;
-    Server server(port, 180);    // 20 - 630rps, 200 - 540rps, 1 - 500rps
+//    unsigned short port = 80;
+    unsigned short port = 8081;
+    Server server(port);    // 20 - 630rps, 200 - 540rps, 1 - 500rps
     try
     {
         std::cout << "Starting server on port " << port << "\n";
