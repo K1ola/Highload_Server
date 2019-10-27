@@ -19,8 +19,9 @@ class ThreadPool
 private:
     std::vector<std::thread> threads;
     std::queue<Task> tasks;
-    std::condition_variable_any synchronizer;
-    std::mutex mutex;
+    std::condition_variable synchronizer;
+    std::mutex writeMutex;
+    std::mutex readMutex;
     std::atomic_bool terminate;
 
 public:
@@ -49,8 +50,9 @@ public:
 
     void AddTask(Task task)
     {
-        std::lock_guard<std::mutex> lock(mutex);
+        writeMutex.lock();
         tasks.push(task);
+        writeMutex.unlock();
         synchronizer.notify_one();
     }
 
@@ -59,12 +61,20 @@ protected:
     {
         while (!terminate)
         {
-            std::unique_lock<std::mutex> lock(mutex);
+            std::mutex localMutex;
+            std::unique_lock<std::mutex> lock(localMutex);
             synchronizer.wait(lock, [&] {return !tasks.empty() || terminate;});
-            Task task = tasks.front();
-            tasks.pop();
-            lock.unlock();
-            RunTask(task);
+            readMutex.lock();
+            if (!tasks.empty()) {
+                Task task = tasks.front();
+                tasks.pop();
+                readMutex.unlock();
+                RunTask(task);
+            }
+            else {
+                readMutex.unlock();
+            }
+            //lock.unlock();
         }
     }
 

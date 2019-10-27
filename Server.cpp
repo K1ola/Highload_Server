@@ -30,7 +30,6 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
 
                 if (request.method == "GET")
                 {
-//                    response_str = "HTTP/1.0 200 OK\nDate: Sun Oct 20 17:37:17 2019\nServer: Highload Static Server\nContent-Length: 954824\nContent-Type: text/html\nConnection: Closed\n";
                     response_str = response.Get_Response();
                 }
                 if (request.method == "HEAD")
@@ -39,8 +38,7 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
                 }
 
                 boost::system::error_code ignored_error;
-//                session->GetSocket().send(boost::asio::buffer(response_str, response.response_len));
-                boost::asio::write(session->GetSocket(), boost::asio::buffer(response_str, response.response_len),
+                boost::asio::write(session->GetSocket(), boost::asio::buffer(response_str, response.response_len + 10),
                                                     boost::asio::transfer_all(), ignored_error);
 //                //session->GetSocket().close();
 //            } else {
