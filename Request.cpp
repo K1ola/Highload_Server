@@ -1,6 +1,7 @@
 #include "Request.h"
 
 #include <sstream>
+#include <iostream>
 
 void Request::Parse(std::string request_str)
 {
@@ -10,6 +11,7 @@ void Request::Parse(std::string request_str)
     is_get_or_head();
 
     if (!correct_request) {
+        std::cout << method << std::endl;
         return;
     }
 

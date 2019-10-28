@@ -1,16 +1,34 @@
 #include "Server.h"
-//#include <fstream>
 #include <ctime>
-//#include <sstream>
 #include <string>
 #include <iostream>
 
 void Server::RunTask(boost::shared_ptr<Session> session) {
     try {
+//        std::mutex m;
+//        m.lock();
+//        c++;
+//        m.unlock();
             boost::asio::streambuf input_buffer;
             boost::system::error_code ec;
-            boost::asio::read_until(session->GetSocket(), input_buffer, "\n", ec);
-            std::string str((std::istreambuf_iterator<char>(&input_buffer)), std::istreambuf_iterator<char>());
+            size_t length = boost::asio::read_until(session->GetSocket(), input_buffer, "\n", ec);
+            if (!input_buffer.size()) {
+                std::cout << "Empty read socket" << std::endl;
+                return;
+            }
+//            std::string str((std::istreambuf_iterator<char>(&input_buffer)), std::istreambuf_iterator<char>());
+            auto data = input_buffer.data();
+            std::string str (boost::asio::buffers_begin(data), boost::asio::buffers_begin(data) + length);
+
+            if (str.empty()) {
+                std::cout << "Empty str" << std::endl;
+                return;
+            }
+
+            if (ec) {
+                std::cout << "Exception: " << ec.message() << std::endl;
+                throw boost::system::system_error(ec);
+            }
 
             Request request;
             request.Parse(str);
@@ -25,6 +43,8 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
 //            if (!ec || ec == boost::asio::error::eof) {
                 if (!request.correct_request)
                 {
+                    std::cout << "Bad_Request" << std::endl;
+                    std::cout << str << std::endl;
                     response_str = response.Not_Alloved();
                 }
 
@@ -36,6 +56,9 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
                 {
                     response_str = response.Head_Response();
                 }
+
+//                boost::system::error_code error;
+//                session->GetSocket().write_some(boost::asio::buffer(response_str), error);
 
                 boost::system::error_code ignored_error;
                 boost::asio::write(session->GetSocket(), boost::asio::buffer(response_str));
@@ -77,12 +100,15 @@ void Server::Start()
     {
         NewSession = boost::shared_ptr<Session>(new Session(IoService));
         boost::system::error_code error;
+//        Acceptor.set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
         Acceptor.accept(NewSession->GetSocket(), error);
-        if (!error) {
+//        if (c >= 99990)
+//            std::cout << "Counter " << c << std::endl;
+//        if (!error) {
             AddTask(NewSession);
-        } else {
-            std::cout << "Acceptor error" << std::endl;
-        }
+//        } else {
+//            std::cout << "Acceptor error" << std::endl;
+//        }
     }
 }
 
@@ -130,3 +156,4 @@ void Server::find_file(const boost::filesystem::path& p)
         std::cout << ex.what() << '\n';
     }
 }
+

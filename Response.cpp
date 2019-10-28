@@ -19,6 +19,7 @@ std::string Response::Get_Response()
 
     if (full_path.empty())
     {
+        std::cout << "Bad_Request:" << full_path << std::endl;
         return Bad_Request();
     }
 
@@ -29,6 +30,7 @@ std::string Response::Get_Response()
 
     if (url.find("etc") != std::string::npos)
     {
+        std::cout << "Forbidden:" << full_path << std::endl;
         return Forbidden();
     }
     std::ifstream file;
@@ -37,25 +39,22 @@ std::string Response::Get_Response()
     {
         handle_last_character(full_path);
         full_path += "index.html";
-//        file.open(full_path);
 
         if (map.find(full_path) == map.end())
-//        if (file.fail())
         {
+            std::cout << "Forbidden:" << full_path << std::endl;
             return Forbidden();
         }
     }
     else
     {
-//        file.open(full_path);
         if (map.find(full_path) == map.end())
-//        if (file.fail())
         {
+            std::cout << "Not_Found:"  << full_path << std::endl;
             return Not_Found();
         }
     }
 
-//    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     std::string content = map[full_path];
 
     auto res = ok_headers(OK, content.size(), get_file_type()) + content;
@@ -217,5 +216,5 @@ bool Response::is_dir(std::string path)
 void Response::handle_last_character(std::string& str)
 {
     if (str.back() == '/') return;;
-    str.back() += '/';
+    str += '/';
 }

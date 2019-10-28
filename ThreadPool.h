@@ -4,14 +4,13 @@
 
 #ifndef HIGHLOAD_DZ1_THREADPOOL_H
 #define HIGHLOAD_DZ1_THREADPOOL_H
-#include <boost/asio.hpp>
-#include "Session.h"
 #include <vector>
 #include <queue>
 #include <thread>
 #include <condition_variable>
 #include <mutex>
 #include <atomic>
+#include <iostream>
 
 template<class Task>
 class ThreadPool
@@ -20,8 +19,6 @@ private:
     std::vector<std::thread> threads;
     std::queue<Task> tasks;
     std::condition_variable synchronizer;
-    std::mutex writeMutex;
-    std::mutex readMutex;
     std::mutex mutex;
     std::atomic_bool terminate;
 
@@ -51,9 +48,12 @@ public:
 
     void AddTask(Task task)
     {
+//        std::lock_guard<std::mutex> lock(mutex);
+//        tasks.push(task);
+//        synchronizer.notify_one();
         std::unique_lock<std::mutex> lock(mutex);
         tasks.push(task);
-        lock.unlock(); //TODO
+        lock.unlock();
         synchronizer.notify_one();
     }
 

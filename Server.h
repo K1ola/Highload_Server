@@ -50,6 +50,8 @@ private:
     boost::asio::io_service IoService;
     boost::asio::ip::tcp::acceptor Acceptor;
 
+//    int c = 0;
+
 
     SessionPtr NewSession;
 
