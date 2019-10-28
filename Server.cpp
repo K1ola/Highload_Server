@@ -34,8 +34,8 @@ void Server::RunTask(boost::shared_ptr<Session> session) {
             request.Parse(str);
 
             //TODO check
-            Response response(config.document_root_debug, request.url, map);
-//            Response response(config.document_root, request.url, map);
+//            Response response(config.document_root_debug, request.url, map);
+            Response response(config.document_root, request.url, map);
 //
             std::string response_str;
 //
@@ -115,8 +115,8 @@ void Server::Start()
 
 void Server::getFilesToHashMap() {
     //TODO check
-//    const boost::filesystem::path& dir_path(config.document_root + "/httptest");
-    const boost::filesystem::path& dir_path(config.document_root_debug + "/httptest");
+    const boost::filesystem::path& dir_path(config.document_root + "/httptest");
+//    const boost::filesystem::path& dir_path(config.document_root_debug + "/httptest");
     find_file(dir_path);
 }
 
